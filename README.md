@@ -75,3 +75,65 @@ CREATE TABLE books
             author VARCHAR(30),
             publisher VARCHAR(30)
 );
+
+-- Create table "IssueStatus"
+DROP TABLE IF EXISTS issued_status;
+CREATE TABLE issued_status
+(
+            issued_id VARCHAR(10) PRIMARY KEY,
+            issued_member_id VARCHAR(30),
+            issued_book_name VARCHAR(80),
+            issued_date DATE,
+            issued_book_isbn VARCHAR(50),
+            issued_emp_id VARCHAR(10),
+            FOREIGN KEY (issued_member_id) REFERENCES members(member_id),
+            FOREIGN KEY (issued_emp_id) REFERENCES employees(emp_id),
+            FOREIGN KEY (issued_book_isbn) REFERENCES books(isbn) 
+);
+
+
+
+-- Create table "ReturnStatus"
+DROP TABLE IF EXISTS return_status;
+CREATE TABLE return_status
+(
+            return_id VARCHAR(10) PRIMARY KEY,
+            issued_id VARCHAR(30),
+            return_book_name VARCHAR(80),
+            return_date DATE,
+            return_book_isbn VARCHAR(50),
+            FOREIGN KEY (return_book_isbn) REFERENCES books(isbn)
+);
+
+```
+
+### 2. CRUD Operations
+
+- **Create**: Inserted sample records into the `books` table.
+- **Read**: Retrieved and displayed data from various tables.
+- **Update**: Updated records in the `employees` table.
+- **Delete**: Removed records from the `members` table as needed.
+
+**Task 1. Create a New Book Record**
+-- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
+
+```sql
+INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
+VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
+SELECT * FROM books;
+```
+**Task 2: Update an Existing Member's Address**
+
+```sql
+UPDATE members
+SET member_address = '125 Oak St'
+WHERE member_id = 'C103';
+```
+
+**Task 3: Delete a Record from the Issued Status Table**
+-- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
+
+```sql
+DELETE FROM issued_status
+WHERE   issued_id =   'IS121';
+```
